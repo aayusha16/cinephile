@@ -1,0 +1,24 @@
+<nav class="flex items-center justify-between border-b border-white/10 bg-[#111118] px-8 py-6 md:px-16">
+
+  <%= link_to root_path, class: "text-2xl font-bold tracking-wide text-amber-400" do %>
+    Welcome to Cinephile<span class="text-white">.</span>
+  <% end %>
+
+  <div class="flex items-center gap-8">
+
+    <%= link_to "Home", root_path,
+        class: "text-sm text-gray-300 transition hover:text-amber-400" %>
+
+    <% if current_user %>
+      <%= button_to "Logout", session_path, method: :delete,
+          class: "text-sm text-gray-300 transition hover:text-amber-400" %>
+    <% else %>
+      <%= link_to "Sign In", new_session_path,
+          class: "text-sm text-gray-300 transition hover:text-amber-400" %>
+
+      <%= link_to "Sign Up", new_user_path,
+          class: "rounded-lg bg-amber-500 px-5 py-2 text-sm font-semibold text-black hover:bg-amber-400" %>
+    <% end %>
+
+  </div>
+</nav>

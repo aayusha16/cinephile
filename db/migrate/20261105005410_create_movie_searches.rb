@@ -1,0 +1,9 @@
+class CreateMovieSearches < ActiveRecord::Migration[8.1]
+  def change
+    create_table :movie_searches do |t|
+      t.string :query
+
+      t.timestamps
+    end
+  end
+end

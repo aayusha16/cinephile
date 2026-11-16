@@ -1,0 +1,81 @@
+
+<div class="min-h-screen bg-[#0b0b0f] px-8 py-12 text-white">
+  <div class="mx-auto max-w-5xl">
+
+    <%= link_to "← Back to movies", root_path,
+        class: "text-amber-400 transition hover:text-amber-300" %>
+
+    <!-- Movie Details -->
+    <div class="mt-8 flex flex-col gap-8 rounded-xl border border-white/10 bg-[#111118] p-6 md:flex-row">
+
+      <% if @movie.poster_path.present? %>
+        <img
+          src="https://image.tmdb.org/t/p/w500<%= @movie.poster_path %>"
+          alt="<%= @movie.title %>"
+          class="w-full rounded-lg object-cover md:w-72">
+      <% else %>
+        <div class="flex h-96 w-full items-center justify-center rounded-lg bg-gray-800 text-gray-400 md:w-72">
+          No Poster Available
+        </div>
+      <% end %>
+
+      <div class="flex-1">
+        <h1 class="text-3xl font-bold text-amber-400 md:text-4xl">
+          <%= @movie.title %>
+        </h1>
+
+        <p class="mt-4 text-gray-400">
+          Release Date:
+          <%= @movie.release_date&.strftime("%B %d, %Y") || "Unknown" %>
+        </p>
+
+        <p class="mt-3 text-amber-400">
+          ★ <%= @movie.vote_average&.round(1) || "N/A" %>/10
+        </p>
+
+        <h2 class="mt-8 text-xl font-semibold">Overview</h2>
+
+        <p class="mt-3 leading-8 text-gray-300">
+          <%= @movie.overview.presence || "No overview available." %>
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Write a Review -->
+    <div class="mt-12 rounded-xl border border-white/10 bg-[#111118] p-6">
+
+      <h2 class="mb-6 text-2xl font-bold text-amber-400">
+        Write a Review
+      </h2>
+
+      <% if current_user %>
+
+        <%= form_with model: [@movie, Review.new] do |form| %>
+
+          <%= form.text_area :content,
+    rows: 4,
+    placeholder: "Share your thoughts about this movie...",
+    style: "color: white; background-color: #1c1c27; caret-color: white;",
+    class: "w-full rounded-lg border border-white/10 p-4 placeholder:text-gray-500 focus:border-amber-400 focus:outline-none" %>
+
+          <%= form.submit "Submit Review",
+              class: "mt-4 rounded-lg bg-amber-500 px-6 py-3 font-semibold text-black hover:bg-amber-400" %>
+
+        <% end %>
+
+      <% else %>
+
+        <p class="text-gray-400">
+          Please
+          <%= link_to "sign in", new_session_path,
+              class: "text-amber-400 hover:underline" %>
+          to write a review.
+        </p>
+
+      <% end %>
+
+    </div>
+
+  </div>
+</div>
